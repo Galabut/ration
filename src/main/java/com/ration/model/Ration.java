@@ -1,10 +1,10 @@
 package model;
 
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-
-import lombok.Getter;
+import java.util.List;
 
 @Component
 @Getter
@@ -19,4 +19,6 @@ public class Ration {
     String age;
 
     String sex;
+
+    List<String> specialFeatures;
 }
