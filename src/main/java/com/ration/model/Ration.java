@@ -1,24 +1,34 @@
-package model;
+package com.ration.model;
 
+import lombok.Builder;
 import lombok.Getter;
-import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 
-@Component
 @Getter
+@Builder
+@Entity
+@Table
 public class Ration {
 
-    Long id;
+    @GeneratedValue
+    @Id
+    private Long id;
 
-    String name;
 
-    BigDecimal requiredAmount;
+    private String name;
 
-    String age;
+    @Column(name = "MKG")
+    private BigDecimal requiredAmount;
 
-    String sex;
+    private Integer startAge;
 
-    List<String> specialFeatures;
+    private Integer endAge;
+
+    @Enumerated(EnumType.STRING)
+    private Enum sex;
+
+    @Enumerated(EnumType.STRING)
+    private Enum healthFeature;
 }

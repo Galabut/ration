@@ -1,6 +1,8 @@
 package com.ration.service;
 
+import com.ration.dto.DtoConverterFactory;
 import com.ration.dto.RationDto;
+import com.ration.repository.RationRepository;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -21,6 +23,13 @@ public class LoadService {
 
     private final static String excelFilePath = "Vitamins.xlsx";
 
+    private RationRepository rationRepository;
+
+
+    public LoadService(RationRepository rationRepository) {
+        this.rationRepository = rationRepository;
+    }
+
     public String importFile() throws IOException {
         final List<RationDto> rationEntries = new ArrayList<>();
         FileInputStream fis = new FileInputStream(new File(excelFilePath));
@@ -32,24 +41,31 @@ public class LoadService {
             Row nextRow = rowIterator.next();
             if (nextRow.getRowNum() == 0) continue;
             Iterator<Cell> cellIterator = nextRow.cellIterator();
+            RationDto dto = new RationDto();
             while (cellIterator.hasNext()) {
-                RationDto dto = new RationDto();
                 Cell cell = cellIterator.next();
                 int columnIndex = cell.getColumnIndex();
                 switch (columnIndex) {
                     case 0:
                     case 2:
+                    case 6:
                         break;
                     case 4: {
                         dto.setSex((String) getCellValue(cell));
                         break;
                     }
                     case 5: {
-                        dto.getSpecialFeatures().add((String) getCellValue(cell));
+                        dto.setHealthFeature((String) getCellValue(cell));
                         break;
                     }
-                    case 6: {
-                        dto.setAge((String) getCellValue(cell));
+                    case 7: {
+                        Double cellValue = (Double) getCellValue(cell);
+                        dto.setStartAge(Objects.requireNonNull(cellValue).intValue());
+                        break;
+                    }
+                    case 8: {
+                        Double cellValue = (Double) getCellValue(cell);
+                        dto.setEndAge(Objects.requireNonNull(cellValue).intValue());
                         break;
                     }
                     case 1: {
@@ -61,8 +77,9 @@ public class LoadService {
                         break;
                     }
                 }
-                rationEntries.add(dto);
             }
+            rationEntries.add(dto);
+            rationRepository.save(DtoConverterFactory.fromRationDto(dto));
         }
         return String.valueOf(rationEntries.size());
     }
@@ -72,9 +89,8 @@ public class LoadService {
             case STRING:
                 return cell.getStringCellValue();
             case FORMULA:
-            case NUMERIC: {
+            case NUMERIC:
                 return cell.getNumericCellValue();
-            }
             case BOOLEAN: {
                 return cell.getBooleanCellValue();
             }

@@ -1,9 +1,5 @@
 package com.ration.dto;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,14 +11,16 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RationDto {
 
-    String name;
+    private String name;
 
-    String requiredAmount;
+    private String requiredAmount;
 
-    String age;
+    private Integer startAge;
 
-    String sex;
+    private Integer endAge;
 
-    List<String> specialFeatures = new ArrayList<>();
+    private String sex;
+
+    private String healthFeature;
 
 }

@@ -1,9 +1,8 @@
 package com.ration.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import com.ration.model.Ration;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import model.Ration;
-
-public interface RationRepository extends CrudRepository<Ration, Long> {
+public interface RationRepository extends JpaRepository<Ration, Long> {
 
 }
