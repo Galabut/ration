@@ -12,14 +12,14 @@ public class DtoConverterFactory {
 
     public static Ration fromRationDto(RationDto dto) {
         if (dto != null) {
-            return Ration.builder()
-                    .name(dto.getName())
-                    .sex(kidAge(dto.getEndAge()) ? Sex.KID : Sex.getSex(dto.getSex()))
-                    .requiredAmount(new BigDecimal(dto.getRequiredAmount()))
-                    .startAge(dto.getStartAge())
-                    .endAge(dto.getEndAge())
-                    .healthFeature(HealthFeature.getFeature(dto.getHealthFeature()))
-                    .build();
+            Ration ration = new Ration();
+            ration.setName(dto.getName());
+            ration.setSex(kidAge(dto.getEndAge()) ? Sex.KID : Sex.getSex(dto.getSex()));
+            ration.setRequiredAmount(new BigDecimal(dto.getRequiredAmount()));
+            ration.setStartAge(dto.getStartAge());
+            ration.setEndAge(dto.getEndAge());
+            ration.setHealthFeature(HealthFeature.getFeature(dto.getHealthFeature()));
+            return ration;
         } else return null;
     }
 

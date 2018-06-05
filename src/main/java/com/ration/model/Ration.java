@@ -1,21 +1,22 @@
 package com.ration.model;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Getter
-@Builder
+@Data
+@NoArgsConstructor
 @Entity
+@ToString
 @Table
 public class Ration {
 
     @GeneratedValue
     @Id
     private Long id;
-
 
     private String name;
 
@@ -27,8 +28,8 @@ public class Ration {
     private Integer endAge;
 
     @Enumerated(EnumType.STRING)
-    private Enum sex;
+    private Sex sex;
 
     @Enumerated(EnumType.STRING)
-    private Enum healthFeature;
+    private HealthFeature healthFeature;
 }

@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +17,7 @@ public class RationReqParams {
     private Integer age;
 
     @JsonProperty(required = false)
-    private List<String> healthFeatures;
+    private String healthFeature;
 
     @JsonProperty(required = true)
     @NotNull
